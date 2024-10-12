@@ -5,3 +5,8 @@ h1 {
 body {
     color: blue;
 }
+
+img {
+    width: 500px;
+}
+/* not very pretty, but it's a start I hope. */
