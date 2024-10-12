@@ -9,4 +9,8 @@ body {
 img {
     width: 500px;
 }
+
+body {
+    background-color: aliceblue;
+}
 /* not very pretty, but it's a start I hope. */
