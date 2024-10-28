@@ -1,16 +1,11 @@
-h1 {
-    color:red;
-}
-
+/*still not amazing, but i'll worry more about this later */
 body {
+    background: linear-gradient(to right, white, rgb(121, 210, 236));
     color: blue;
-}
-
-img {
-    width: 500px;
-}
-
-body {
     background-color: aliceblue;
+    font-family: "Arial";
+
+    h1 {
+        text-align: center;
+    }
 }
-/* not very pretty, but it's a start I hope. */
