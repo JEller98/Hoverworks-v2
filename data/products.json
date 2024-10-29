@@ -1,7 +1,7 @@
 [{
     "prodID" : 1,
     "prodType" : "Hoverboard",
-    "prodPrice" : 250.00,
+    "prodPrice" : 350.00,
     "prodName" : "Alloyed Eagle V.7x32",
     "prodDesc" : "The latest installment in Hoverworks' signature \"Alloyed Eagle\" series, the Alloyed Eagle V.7 is powered by our cutting-edge V12 engine. This aeroenergetic powerhouse allows our hoverboards to go further and faster while making less noise, making any gear with the V12 engine perfect for galesurfing hobbyists who need to practice without disturbing their neighbors. The deck sits at a comfortable 32 inches in length, making it a solid choice for beginner surfers.",
     "stock" : 143,
@@ -21,7 +21,7 @@
 {
     "prodID" : 3,
     "prodType" : "Hoverskates",
-    "prodPrice" : 150.00,
+    "prodPrice" : 175.00,
     "prodName" : "Ripgliders V.5",
     "prodDesc" : "A staple fashion piece for galesurfers worldwide, the Ripgliders V.5 introduces a Bluetooth-powered switch to toggle the pressure jets (alongside the manual switch located on the outer ankle of each skate), allowing for a seamless transition from galesurfing to walking, jogging, freerunning, or any other activity that powers your world. The Ripgliders also feature a concave cutout in the soles as part of our partnership with Soap!",
     "stock" : 654,
@@ -31,7 +31,7 @@
 {
     "prodID" : 4,
     "prodType" : "Hoverboard",
-    "prodPrice" : 200.00,
+    "prodPrice" : 225.00,
     "prodName" : "Mini Mantis V.2",
     "prodDesc" : "The Mini Mantis Hoverboard is the perfect gift to introduce the youngster in your life to the up-and-coming sport of galesurfing! Featuring a shorter deck length and our lower-power V4 engine, the Mini Mantis provides children with an exhilarating galesurfing experience while staying within children's safety regulations.",
     "stock" : 78,
