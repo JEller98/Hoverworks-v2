@@ -3,7 +3,7 @@ CREATE TABLE products(
     prodType VARCHAR (50) NOT NULL "Undefined", -- board, bike, or skate
     prodPrice FLOAT NOT NULL DEFAULT 0.01,
     prodName VARCHAR (50) NOT NULL DEFAULT "Undefined Product",
-    prodDesc VARCHAR (500),
+    prodDesc VARCHAR (1000),
     prodColor VARCHAR (50),
     engineType VARCHAR (8),
     stock INT, --for inventory purposes
