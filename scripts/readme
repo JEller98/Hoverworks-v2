@@ -1,0 +1,10 @@
+Basic Setup Steps:
+1. Write the YAML file
+2. cd into the directory where the YAML is
+3. Make sure the Docker engine is running
+4. docker compose up -d**
+
+**"docker compose up" will basically get the containers set up and ready to run, also allowing them to "talk" to one another. The "-d" option
+makes it so your terminal isn't locked to the process after running the command; -d is short for "detached mode".
+
+For more advanced stuff, do more research and record your findings somewhere safe.
