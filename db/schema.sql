@@ -4,8 +4,6 @@ CREATE TABLE products(
     prodPrice FLOAT NOT NULL DEFAULT 0.01,
     prodName VARCHAR (50) NOT NULL DEFAULT "Undefined Product",
     prodDesc VARCHAR (1000),
-    prodColor VARCHAR (50),
-    engineType VARCHAR (8),
     stock INT, --for inventory purposes
     deckLength INT, -- NULL for non-boards
     skateSize INT, -- NULL for non-skates
