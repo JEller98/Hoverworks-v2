@@ -1,7 +1,8 @@
 //imports
 import express from "express";
 import chalk from "chalk";
-import router from "./routers/router.js";
+import itemRouter from "./routers/itemRouter.js";
+import orderRouter from "./routers/orderRouter.js";
 
 //creating the server
 const app = express();
@@ -18,8 +19,9 @@ app.use(express.static("./public"));
 //parse JSON in a request body, just in case
 app.use(express.json());
 
-//mount the router
-app.use("/", router);
+//mount the routers
+app.use("/items", itemRouter);
+app.use("/orders", orderRouter);
 
 //starting the server
 app.listen(3030, () => console.log(`Server started on ${chalk.blue("Port 3030")}`));
