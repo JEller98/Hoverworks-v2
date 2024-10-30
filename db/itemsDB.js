@@ -53,11 +53,13 @@ async function addItem(prodType, prodPrice, prodName) {
         }
 }
 
+//currently unsure how to even approach this one
 async function updateItem (id) {
     //we have not been taught how to update yet; I'd assume we use a placeholder for the parameter
     //that represents the column to update + the info to update it with.
 }
 
+//working mostly as intended, I think, possibly, maybe.
 async function deleteItem(id) {
     //first time writing the delete function, hope this doesn't break anything...
     const [results] = await connect.query("DELETE FROM products WHERE prodID = ?", [id]);
