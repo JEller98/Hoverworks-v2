@@ -81,4 +81,4 @@ const deleteItem = async (req, res) => {
     }
 }
 
-export default {getItems, getItemByID, addItem, updateItem, deleteItem};
+export {getItems, getItemByID, addItem, updateItem, deleteItem};
