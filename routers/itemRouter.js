@@ -1,6 +1,6 @@
 import express from "express";
 
-
+//if destructuring functions imported from a file, don't use "export default" in that file; just "export".
 import {getItems, getItemByID, addItem, updateItem, deleteItem} from "../controllers/itemController.js";
 
 const router = express.Router();
