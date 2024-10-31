@@ -47,22 +47,35 @@ async function addItem(prodType, prodPrice, prodName) {
             return null;
         }
         else {
-            //otherwise, return what's already in there, I think?
+            //otherwise, return what's already in there
             const newProduct = await getItemByID(results.insertId);
             return newProduct;
         }
 }
 
-//currently unsure how to even approach this one
-async function updateItem (id) {
-    //we have not been taught how to update yet; I'd assume we use a placeholder for the parameter
-    //that represents the column to update + the info to update it with.
+//currently only updates non-NULLable rows
+async function updateItem (prodType, prodPrice, prodName, id) {
+    const [results] = await connect.query("UPDATE products SET prodType = ?, prodPrice = ?, prodName = ? WHERE prodID = ?", [prodType, prodPrice, prodName, id]);
+
+    //no affected rows means nothing was updated.
+    if (results.affectedRows === 0) {
+        return null;
+    }
+    else {
+        return results;
+    }
 }
 
 //working mostly as intended, I think, possibly, maybe.
 async function deleteItem(id) {
-    //first time writing the delete function, hope this doesn't break anything...
     const [results] = await connect.query("DELETE FROM products WHERE prodID = ?", [id]);
-    return results;
+    
+    //beginning to think I should be making this affectedRows check into its own function. Maybe in a future iteration...
+    if (results.affectedRows === 0) {
+        return null;
+    }
+    else {
+        return results;
+    }
 }
 export default {getItems, getItemByID, addItem, updateItem, deleteItem};
