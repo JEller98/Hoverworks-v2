@@ -43,22 +43,31 @@ const getItemByID = async (req, res) => {
 const addItem = async (req, res) => {
     //get the non-NULLable fields out of the body and send them off
     const {prodType, prodPrice, prodName} = req.body;
-    const result = await db.addItem(prodType, prodPrice, prodName);
 
-    //if we don't get any response back from the DB...
-    if (result === null) {
+    //ensuring the user enters a number for the price
+    if(isNaN (prodPrice)) {
         res.status(400).json({
-            message: "Something went wrong."
+            message: `prodPrice property must be numeric.`
         }).send();
     }
     else {
-        //store the returned item and print it out for the user
-        const item = result[0];
+        const result = await db.addItem(prodType, prodPrice, prodName);
 
-        res.status(201).json({
-            message: `Item saved with ID#${item.prodID}`,
-            item
-        }).send();
+        //if we don't get any response back from the DB...
+        if (result === null) {
+            res.status(400).json({
+                message: "Something went wrong."
+            }).send();
+        }
+        else {
+            //store the returned item and print it out for the user
+            const item = result[0];
+    
+            res.status(201).json({
+                message: `Item saved with ID #${item.prodID}`,
+                item
+            }).send();
+        }
     }
 }
 
@@ -69,27 +78,37 @@ const updateItem = async (req, res) => {
             message: `Please enter a numeric ID.`
         }).send();
     }
-    else {
-        const {prodType, prodPrice, prodName} = req.body;
-        const id = parseInt(req.params.id);
-    
-        const result = await db.updateItem(prodType, prodPrice, prodName, id);
-        if (result === null) {
-            res.status(404).json({
-                message: `No record found with ID #${id}`
-            }).send();
-        }
-        else {
-            const item = result[0];
-            const product = await db.getItemByID(id);
-    
-            res.status(200).json({
-                message: `Item with ID #${id} has been updated.`,
-                product
-            }).send();
+    else { 
+            const {prodType, prodPrice, prodName} = req.body;
+
+            //making sure prodPrice is a number, too
+            if(isNaN (prodPrice)) {
+                res.status(400).json({
+                    message: `prodPrice property must be numeric.`
+                }).send();
+            }
+            else {
+                const id = parseInt(req.params.id);
+                const result = await db.updateItem(prodType, prodPrice, prodName, id);
+
+                //if nothing in the DB matches the id
+                if (result === null) {
+                    res.status(404).json({
+                        message: `No record found with ID #${id}`
+                    }).send();
+                }
+                else {
+                    const item = result[0];
+                    const product = await db.getItemByID(id);
+            
+                    res.status(200).json({
+                        message: `Item with ID #${id} has been updated.`,
+                        product
+                    }).send();
+                }
+            }  
         }
     }
-}
 
 const deleteItem = async (req, res) => {
     //could probably make this number-checking its own function... hmm...
