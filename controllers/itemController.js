@@ -13,28 +13,36 @@ const getItems = async (req, res) => {
 }
 
 const getItemByID = async (req, res) => {
-    //get the ID out of the request body
-    const id = parseInt(req.params.id);
-    const result = await db.getItemByID(id);
-
-    //if the provided ID exists in the database, return it.
-    if (result.length !== 0) {
-        const product = result[0];
-        res.status(200).json({
-            message: `Found item with ID #${id}`,
-            product
+    //junk data check
+    if (isNaN(req.params.id)) {
+        res.status(400).json({
+            message: `Please enter a numeric ID.`
         }).send();
     }
-    else { //id doesn't exist
-        res.status(404).json({
-            message: `Record not found with ID #${id}`
-        }).send();
+    else {
+        //get the ID out of the request body and send it to the database
+        const id = parseInt(req.params.id);
+        const result = await db.getItemByID(id);
+
+        //if the provided ID exists in the database, return it.
+        if (result.length !== 0) {
+            const product = result[0];
+            res.status(200).json({
+                message: `Found item with ID #${id}`,
+                product
+            }).send();
+        }   
+        else { //id doesn't exist
+            res.status(404).json({
+                message: `No record found with ID #${id}`
+            }).send();
+        }
     }
 }
 
 const addItem = async (req, res) => {
+    //get the non-NULLable fields out of the body and send them off
     const {prodType, prodPrice, prodName} = req.body;
-
     const result = await db.addItem(prodType, prodPrice, prodName);
 
     //if we don't get any response back from the DB...
@@ -55,29 +63,58 @@ const addItem = async (req, res) => {
 }
 
 const updateItem = async (req, res) => {
-    const {itemType, itemPrice, itemName} = req.body;
-
-    const result = await db.updateItem(itemType, itemPrice, itemName);
-    
-}
-
-const deleteItem = async (req, res) => {
-    //get the ID out of the request body
-    const id = parseInt(req.params.id);
-    const result = await db.deleteItem(id);
-
-    //this one's busted. currently it deletes no matter what, even if there isn't a legit item in the DB.
-    //if there was a result, let the user know
-    if (result.length !== 0) {
-        res.status(200).json({
-            message: `Item #${id} has been deleted from the database.`
+    //making sure the ID is a number
+    if(isNaN(req.params.id)) {
+        res.status(400).json({
+            message: `Please enter a numeric ID.`
         }).send();
     }
     else {
-        //the ID wasn't in the database
-        res.status(404).json({
-            message: `No item was found in the database with ID#${id}`
+        const {prodType, prodPrice, prodName} = req.body;
+        const id = parseInt(req.params.id);
+    
+        const result = await db.updateItem(prodType, prodPrice, prodName, id);
+        if (result === null) {
+            res.status(404).json({
+                message: `No record found with ID #${id}`
+            }).send();
+        }
+        else {
+            const item = result[0];
+            const product = await db.getItemByID(id);
+    
+            res.status(200).json({
+                message: `Item with ID #${id} has been updated.`,
+                product
+            }).send();
+        }
+    }
+}
+
+const deleteItem = async (req, res) => {
+    //could probably make this number-checking its own function... hmm...
+    if(isNaN(req.params.id)) {
+        res.status(400).json({
+            message: `Please enter a numeric ID.`
         }).send();
+    }
+    else {
+        //get the ID out of the request body
+        const id = parseInt(req.params.id);
+        const result = await db.deleteItem(id);
+
+        //if there was a result, let the user know
+        if (result !== null) {
+            res.status(200).json({
+                message: `Item #${id} has been deleted from the database.`
+            }).send();
+        }
+        else {
+            //the ID wasn't in the database
+            res.status(404).json({
+                message: `No item was found in the database with ID #${id}`
+            }).send();
+        }
     }
 }
 
