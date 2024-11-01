@@ -1,0 +1,256 @@
+{
+	"info": {
+		"_postman_id": "248d221b-6557-4c7f-b539-cba5a64a71ba",
+		"name": "Hoverworks Tests",
+		"description": "An API for testing a mock storefront's catalogue of items and orders.\n\n**Author:** Jared Eller\n\n**Class:** SDEV 372- Cloud Application Deployment\n\n**Quarter:** Fall 2024\n\nEndpoints:\n\n- /items: accesses items in the storefront's catalogue\n    \n- /orders: accesses orders \"customers\" have placed for items in the catalogue",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38879765",
+		"_collection_link": "https://blue-escape-684508.postman.co/workspace/704e4ba9-20f0-4897-b3e2-10b068bc9a01/collection/38879765-248d221b-6557-4c7f-b539-cba5a64a71ba?action=share&source=collection_link&creator=38879765"
+	},
+	"item": [
+		{
+			"name": "Items",
+			"item": [
+				{
+					"name": "Get Items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3030/items",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"items"
+							]
+						},
+						"description": "Returns all items in the storefront's catalogue.\n\nResponses:\n\n- 200 (OK) - All items returned successfully."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Item By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3030/items/7",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"items",
+								"7"
+							]
+						},
+						"description": "Accepts a numeric ID as a path variable and returns the item associated with that ID.\n\nResponses:\n\n- 200 (OK) - Item successfully returned.\n    \n- 400 (Bad Request) - Provided ID was not a number.\n    \n- 404 (Not Found) - Provided ID does not exist in the database."
+					},
+					"response": []
+				},
+				{
+					"name": "Add Item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"prodType\": \"Hoverskates\",\r\n            \"prodPrice\": 20000.99,\r\n            \"prodName\": \"LV Lucullian\",\r\n            \"prodDesc\": \"Hoverworks' limited-edition collaboration with world-renowned fashion brand Louis Vuitton is live! Featuring a luxurious, elegant design on the boot and a specially-made engine to ensure a seamless, soundless transition from galesurfing to walking. Money talks, but wealth whispers.\",\r\n            \"stock\": 30,\r\n            \"deckLength\": null,\r\n            \"skateSize\": 8\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3030/items",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"items"
+							]
+						},
+						"description": "Accepts user-submitted parameters and creates a new database entry with them.\n\nResponses:\n\n- 201 (Created) - Entry creation successful.\n    \n- 400 (Bad Request) - Data was not formatted correctly.\n    \n\nHere is an example request that follows proper format:"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Item",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"prodType\": \"Hoverskates\",\r\n            \"prodPrice\": 75,\r\n            \"prodName\": \"EC0-CLA55 V.1\",\r\n            \"prodDesc\": \"For the economically-conscious worker, introducing Hoverworks' latest line of hoverskates! You spend most of the day running around for a boss that really just doesn't appreciate you enough. Why not give your feet a break and hover above the ground once you've clocked out? You can't make the post-modern world go round if it feels like you're stepping on hot coals every time you take a step, after all!\",\r\n            \"stock\": null,\r\n            \"deckLength\": null,\r\n            \"skateSize\": 13\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3030/items/7",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"items",
+								"7"
+							]
+						},
+						"description": "Accepts parameters and a numeric ID from the user and updates a database entry with them.\n\nResponses:\n\n- 200 (OK) - Database record was updated successfully.\n    \n- 400 (Bad Request) - Parameters did not follow proper format.\n    \n- 404 (Not Found) - No entry in the database exists with the provided ID.\n    \n\nHere is an example of a properly-formatted request:"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3030/items/9",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"items",
+								"9"
+							]
+						},
+						"description": "Deletes an item with a user-provided ID from the database.\n\nResponses:\n\n- 200 (OK) - Item has been deleted from the database successfully.\n    \n- 400 (Bad Request) - ID was not numeric.\n    \n- 404 (Not Found) - No record was found in the database with the provided ID."
+					},
+					"response": []
+				}
+			],
+			"description": "Various HTTP requests to interact with the various items offered by the storefront."
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Get Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3030/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"orders"
+							]
+						},
+						"description": "Returns all orders in the database.\n\nResponses:\n\n- 200 (OK) - All orders returned successfully."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3030/orders/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"orders",
+								"1"
+							]
+						},
+						"description": "Accepts a numeric ID as a path variable and returns the order associated with that ID.\n\nResponses:\n\n- 200 (OK) - Order successfully returned.\n    \n- 400 (Bad Request) - Provided ID was not a number.\n    \n- 404 (Not Found) - Provided ID does not exist in the database."
+					},
+					"response": []
+				},
+				{
+					"name": "Add Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"orderName\": \"Eve Davis\",\r\n        \"orderSubTotal\": 30.25,\r\n        \"orderTax\": 0.75,\r\n        \"orderPromo\": null,\r\n        \"orderTotal\": 31.00,\r\n        \"orderStatus\": \"Canceled\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3030/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"orders"
+							]
+						},
+						"description": "Accepts user-submitted parameters and creates a new database entry with them.\n\nResponses:\n\n- 201 (Created) - Entry creation successful.\n    \n- 400 (Bad Request) - Data was not formatted correctly.\n    \n\nHere is an example request that follows proper format:"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"orderName\": \"Charlie Brown\",\r\n        \"orderSubTotal\": 60.00,\r\n        \"orderTax\": 4.80,\r\n        \"orderPromo\": null,\r\n        \"orderTotal\": 64.80,\r\n        \"orderDate\": \"2024-10-28T16:45:00.000Z\",\r\n        \"orderStatus\": \"Shipped\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3030/orders/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"orders",
+								"5"
+							]
+						},
+						"description": "Accepts parameters and a numeric ID from the user and updates a database entry with them.\n\nResponses:\n\n- 200 (OK) - Database record was updated successfully.\n    \n- 400 (Bad Request) - Parameters did not follow proper format.\n    \n- 404 (Not Found) - No entry in the database exists with the provided ID.\n    \n\nHere is an example of a properly-formatted request:"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3030/orders/2",
+							"host": [
+								"localhost"
+							],
+							"port": "3030",
+							"path": [
+								"orders",
+								"2"
+							]
+						},
+						"description": "Deletes an order with a user-provided ID from the database.\n\nResponses:\n\n- 200 (OK) - Order has been deleted from the database successfully.\n    \n- 400 (Bad Request) - ID was not numeric.\n    \n- 404 (Not Found) - No record was found in the database with the provided ID."
+					},
+					"response": []
+				}
+			],
+			"description": "HTTP requests that interact with the \"orders\" table in the database are stored in this folder. Functionally they are very similar to the ones found in the Items folder."
+		}
+	]
+}
