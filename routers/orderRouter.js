@@ -1,27 +1,17 @@
 import express from "express";
-// import {getItems, getItemByID, addItem, updateItem, deleteItem} from "../controllers/orderController.js";
+import {getOrders, getOrderByID, addOrder, updateOrder, deleteOrder} from "../controllers/orderController.js";
 
 const router = express.Router();
 
-//orders routes
-router.post("/", (req, res) => {
-    res.status(200).send("POST orders");
-});
+//Create, Read, Read (again), Update,  Delete, in that order.
+router.post("/", addOrder);
 
-router.get("/", (req, res) => {
-    res.status(200).send("GET orders");
-});
+router.get("/", getOrders);
 
-router.get("/:id", (req, res) => {
-    res.status(200).send("GET orders by ID");
-})
+router.get("/:id", getOrderByID)
 
-router.put("/:id", (req, res) => {
-    res.status(200).send("PUT orders");
-});
+router.put("/:id", updateOrder);
 
-router.delete("/:id", (req, res) => {
-    res.status(200).send("DELETE orders");
-});
+router.delete("/:id", deleteOrder);
 
 export default router;
