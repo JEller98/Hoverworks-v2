@@ -15,9 +15,9 @@ INSERT INTO products(prodType, prodPrice, prodName, prodDesc, stock, deckLength,
 "This self-service kit allows our customers to alter and customize their Hoverworks products to their hearts' content. Is your Alloyed Eagle a little too slow for your taste? Maybe the Wild Wasp has been in need of a tune-up, but you can't get an appointment with your local repairman? Fear no longer, the right to repair is in your hands! Hoverworks Ltd. does not claim responsibility for any malfunctioning or unexpected behavior caused by the introduction of 3rd-party components into our products.",
 253, NULL, NUll);
 
-INSERT INTO orders (orderName, orderSubTotal, orderTotal, orderDate, orderStatus) VALUES
-('Alice Smith', 25.50, 27.00, NOW(), 'Pending'),
-('Bob Johnson', 15.75, 16.50, NOW(), 'Processing'),
-('Carol White', 50.00, 52.50, NOW(), 'Shipping'),
-('David Brown', 10.00, 10.50, NOW(), 'Delivered'),
-('Eve Davis', 30.25, 31.00, NOW(), 'Canceled');
+INSERT INTO orders (orderName, orderSubTotal, orderTax, orderPromo, orderTotal, orderDate, orderStatus) VALUES
+('Alice Smith', 25.50, 1.50, null, 27.00, NOW(), 'Pending'),
+('Bob Johnson', 15.75, 0.75, null, 16.50, NOW(), 'Processing'),
+('Carol White', 50.00, 2.50, null, 52.50, NOW(), 'Shipping'),
+('David Brown', 10.00, 0.50, null, 10.50, NOW(), 'Delivered'),
+('Eve Davis', 30.25, 0.75, null, 31.00, NOW(), 'Canceled');
