@@ -18,8 +18,7 @@ const connect = await mysql.createConnection({
     password: DB_PASSWORD
 });
 //fill in the port here
-console.log(`Connected to MySQL on port ${chalk.blue(DB_PORT)}`);
-
+console.log(`Connected to MySQL on ${chalk.blue("Port", DB_PORT)}`);
 //methods to interact with the DB down here
 
 //functioning as intended
@@ -37,10 +36,10 @@ async function getItemByID(id) {
 }
 
 //working, I think?
-async function addItem(prodType, prodPrice, prodName) {
+async function addItem(prodType, prodPrice, prodName, prodDesc, stock, deckLength, skateSize) {
     const [results] = await connect.query(
-        "INSERT INTO products (prodType, prodPrice, prodName) VALUES (?, ?, ?)", [prodType, prodPrice, prodName]);
-        //only including the NOT NULL columns in this; may play around with "..." later for a more robust option
+        "INSERT INTO products (prodType, prodPrice, prodName, prodDesc, stock, deckLength, skateSize) " +
+        "VALUES (?, ?, ?, ?, ?, ?, ?)", [prodType, prodPrice, prodName, prodDesc, stock, deckLength, skateSize]);
 
         //if no rows are affected, cool, it's a new product!
         if (results.affectedRows === 0) {
@@ -53,9 +52,10 @@ async function addItem(prodType, prodPrice, prodName) {
         }
 }
 
-//currently only updates non-NULLable rows
-async function updateItem (prodType, prodPrice, prodName, id) {
-    const [results] = await connect.query("UPDATE products SET prodType = ?, prodPrice = ?, prodName = ? WHERE prodID = ?", [prodType, prodPrice, prodName, id]);
+async function updateItem (prodType, prodPrice, prodName, prodDesc, stock, deckLength, skateSize, id) {
+    const [results] = await connect.query("UPDATE products " +
+        "SET prodType = ?, prodPrice = ?, prodName = ?, prodDesc = ?, stock = ?, deckLength = ?, skateSize = ? WHERE prodID = ?",
+        [prodType, prodPrice, prodName, prodDesc, stock, deckLength, skateSize, id]);
 
     //no affected rows means nothing was updated.
     if (results.affectedRows === 0) {
