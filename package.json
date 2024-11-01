@@ -1,7 +1,7 @@
 {
   "name": "Hoverworks Ltd.",
-  "version": "10-11-24",
-  "main": "index.js",
+  "version": "11-1-24",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon server.js"
@@ -10,10 +10,12 @@
   "author": "Jared Eller",
   "license": "ISC",
   "description": "A mock store page for a fictional company that sells hoverboards, hoverbikes, hoverskates, etc...",
-  "github": "https://github.com/jarcher-sdev-classes/quarter-long-project-JEller98",
+  "link": "https://github.com/jarcher-sdev-classes/quarter-long-project-JEller98",
   "dependencies": {
     "chalk": "^5.3.0",
+    "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "mysql2": "^3.11.3",
     "nodemon": "^3.1.7"
   }
 }
