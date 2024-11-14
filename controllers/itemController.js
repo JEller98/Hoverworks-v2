@@ -54,9 +54,9 @@ const addItem = async (req, res) => {
     }
     else {
         //ensuring the user enters a number for the price
-        if(isNaN (prodPrice)) {
+        if(isNaN (prodPrice) || isNaN(stock)) {
             res.status(400).json({
-                message: `prodPrice property must be numeric.`
+                message: `Price and amount in stock must be numeric.`
             }).send();
         }
         else {
