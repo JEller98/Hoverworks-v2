@@ -193,8 +193,13 @@ const wipeTable = async () => {
 
 //so, each of these functions corresponds to a given button... feel like I should be outsourcing these to their own file
 const editItem = async id => {
-    //pop up a form and let the user input data... but I gotta validate the data to make sure it's well-formatted, too...
+    //select the table, then the row associated with the provided ID
+    const table = document.querySelector("#products-table");
+
+
     
+    //pop up a form and let the user input data... but I gotta validate the data to make sure it's well-formatted, too...
+
 
 
     const uri = `http://localhost:3030/items/${id}`;
@@ -234,44 +239,44 @@ const deleteItem = async (id) => {
                 const confirm = window.confirm(`Are you sure you want to delete ${row.children[1].textContent} from the database?`);
                 if (confirm) {
                     row.remove();
+
+                    // make a DELETE HTTP request to the database, right?
+                    const uri = `http://localhost:3030/items/${id}`;
+                    const config = {
+                        method: "delete",
+                        mode: "cors",
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    };
+
+                    /*
+                    DELETE response status codes:
+                    200 (OK)- Item was deleted
+                    404 (Not Found)- Item not in DB
+                    404 shouldn't be an issue here since the user can only click buttons that correspond to existing entries...
+                    I hope... better to error-proof just to be safe.
+                    */
+                    try {
+                        const response = await fetch (uri, config);
+
+                        //if the response code is something outside the 200 range, throw an error.
+                        if(!response.ok) {
+                            throw new Error(`An error has occurred. Status: ${response.status}`);
+                        }
+                        else { //otherwise, print the results to the console.
+                            const results = await response.json();
+                            console.log(results);
+                        }
+                    }
+                    catch (err) {
+                        //print out the error if there is one
+                        console.log(err);
+                    }
                 }
             }
         }
     }
-
-    // make a DELETE HTTP request to the database, right?
-    const uri = `http://localhost:3030/items/${id}`;
-    const config = {
-        method: "delete",
-        mode: "cors",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    };
-
-    /*
-    DELETE response status codes:
-    200 (OK)- Item was deleted
-    404 (Not Found)- Item not in DB
-    404 shouldn't be an issue here since the user can only click buttons that correspond to existing entries...
-    I hope... better to error-proof just to be safe.
-    */
-   try {
-    const response = await fetch (uri, config);
-
-    //if the response code is something outside the 200 range, throw an error.
-    if(!response.ok) {
-        throw new Error(`An error has occurred. Status: ${response.status}`);
-    }
-    else { //otherwise, print the results to the console.
-        const results = await response.json();
-        console.log(results);
-    }
-   }
-   catch (err) {
-    //print out the error if there is one
-    console.log(err);
-   }
 }
 
 const newOrder = async () => {
