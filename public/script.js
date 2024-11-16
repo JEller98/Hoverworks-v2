@@ -70,9 +70,13 @@ const buildItems = prods => {
         row.append(id, name, cat, pr, quan, edit, del);
 
         id.textContent = thing.prodID;
+        id.className = "prodID";
         name.textContent = thing.prodName;
+        name.className = "prodName";
         cat.textContent = thing.prodType;
+        cat.className = "prodType";
         pr.textContent = thing.prodPrice;
+        pr.className = "prodPrice";
 
         //stock can be NULL, so check for it.
         if(thing.stock === null) {
@@ -83,6 +87,8 @@ const buildItems = prods => {
         else {
             quan.textContent = thing.stock;
         }
+
+        quan.className = "stock";
 
         edit.innerHTML = "Edit";
         edit.className = "editItem";
@@ -104,7 +110,9 @@ const buildItems = prods => {
 //utility function
 const handleClicks = event => {
     //let's start by grabbing the ID of the product and the table itself
-    const id = event.target.parentNode.children[0].innerHTML;
+    const row = event.target.closest("tr");
+
+    const id = row.children[0].innerHTML;
     
     //check the class of the button that was clicked
     //This is more switch statements than I've written in the past 2 years!
@@ -114,6 +122,9 @@ const handleClicks = event => {
             break;
         case "delItem" :
             deleteItem(id);
+            break;
+        case "saveItem" :
+            saveItem(row);
             break;
     }
 }
@@ -196,19 +207,69 @@ const editItem = async id => {
     //select the table, then the row associated with the provided ID
     const table = document.querySelector("#products-table");
 
+     //check for the provided ID in the table rows
+     for (let i = 0; i < table.children.length; i++) {
+        if (table.children[i].tagName === "TR") {
+            //grabbing the current row
+            const row = table.children[i];
 
-    
-    //pop up a form and let the user input data... but I gotta validate the data to make sure it's well-formatted, too...
+            if (row.children[0].textContent === id) {
+                //swap out the various parts of the row with input fields
+                for (const elem of row.children) {
+                    //probably a better way of doing this...
+                    if (elem.className === "prodName") {
+                        //#0 is ID, #1 is Name, #2 is Category, #3 is Price, #4 is stock...
+                            elem.innerHTML = `<input type = "text" value = ${elem.textContent}>`;
 
+                    }
+                    //gotta swap this one out with 3 radio buttons. this is gonna be tricky to style, I feel.
+                    //scratch that, buttons can come later
+                    else if (elem.className === "prodType") {
 
+                        elem.innerHTML = `<input type = "text" value = ${elem.textContent}>`;
+                    }
+                    else if (elem.className === "prodPrice") {
+                        elem.innerHTML = `<input type = "text" value = ${elem.textContent}>`;
+                    }
+                    else if (elem.className === "stock") {
+                        elem.innerHTML = `<input type = "text" value = ${elem.textContent}>`;
+                    }
+                    //swap the edit button for a save button
+                    else if (elem.className === "editItem") {
+                        elem.innerHTML = "Save";
+                        elem.className = "saveItem";
+                    }
+                }
+            }
+        }
+    }
+}
 
+const saveItem = async row => {
+    //get the items out of the row; this feels like a time where destructuring would save the day, but I'm playing it safe (and kludgey).
+    const id = row.children[0].innerHTML;
+    const name = row.querySelector(".prodName input").value;
+    const category = row.querySelector(".prodType input").value;
+    const price = row.querySelector(".prodPrice input").value;
+    const stock = row.querySelector(".stock input").value;
+
+    //now make the request...
     const uri = `http://localhost:3030/items/${id}`;
     const config = {
-        method: "update",
+        method: "put",
         mode: "cors",
         headers: {
             "Content-Type": "application/json"
-        }
+        },
+        body: JSON.stringify({
+            prodType: category, //necessary
+            prodPrice: price, //necessary
+            prodName: name, //necessary
+            prodDesc: null,
+            stock: stock, //necessary
+            deckLength: null,
+            skateSize: null
+        })
     };
 
     /*
@@ -220,8 +281,16 @@ const editItem = async id => {
     404 shouldn't be a worry (knock on wood), but I have to handle 400...
     */
     const response = await fetch(uri, config);
-    const results = await response.json();
-    console.log(results);
+    
+    if (response.ok) {
+        const results = await response.json();
+        console.log(results);
+        wipeTable();
+        getData("items");
+    }
+    else {
+        console.log(`Error: ${response.status} ${response.statusText}`);
+    }
 }
 
 //working
