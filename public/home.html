@@ -22,16 +22,6 @@
           <th>Edit</th>
           <th>Delete</th>
         </tr>
-
-        <!-- Actual content should be populated here 
-         
-        Example structure of a table row + the data inside
-        <tr>
-            <td>aaaaaaaaaaaaaaaaaaaaaaaaa</td>
-        </tr>
-        -->
-
-
     </table>
     <form id = "new-item">
         <!-- Name [Input: Text], Category [Radio Buttons], Price [Input: Text], Quantity in stock [Input: Text], Submit button... -->
@@ -68,14 +58,23 @@
             <th>Order Total</th>
             <th>Order Status</th>
         </tr>
-
-        <!-- Now put actual data down here 
-        Example structure of a table row + the data inside
-        <tr>
-            <td>aaaaaaaaaaaaaaaaaaaaaaaaa</td>
-        </tr> 
-        -->
     </table>
+
+    <form id = "new-order">
+        <!-- Name [Input: Text], Category [Radio Buttons], Price [Input: Text], Quantity in stock [Input: Text], Submit button... -->
+         <label for = "order-name">Order Name:</label> <br>
+         <input type = "text" id = "order-name" name = "orderName"> <br>
+
+         <label for = "order-sub">Subtotal: </label>
+         <input type = "text" id = "order-sub" name = "orderSubTotal"> <br>
+
+         <label for = "order-total">Total: </label>
+         <input type = "text" id = "order-total" name = "orderTotal"> <br>
+
+         <label for = "order-status">Order Status: </label>
+         <input type = "text" id = "order-status" name = "orderStatus"> <br>
+         <input type = "submit" value = "submit">
+    </form>
 
     <script src = "script.js"></script>
 </body>
