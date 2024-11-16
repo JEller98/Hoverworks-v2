@@ -1,14 +1,26 @@
 //should I declare some global variables up here? And some listeners that exist outside of functions?
 
-//keep the form in a variable for later
-const form = document.querySelector("#new-item");
+//keep the forms in a variable for later
+const itemForm = document.querySelector("#new-item");
+const orderForm = document.querySelector("#new-order");
 
-//this listens for someone to hit the submit button, then overrides the "default submission"
+//these listens for someone to hit the submit button, then overrides the "default submission"
 //behavior and instead calls newItem() down below
-form.addEventListener("submit", event => {
+itemForm.addEventListener("submit", event => {
     event.preventDefault();
-    newItem();
+
+    if (event.target.id === "new-item") {
+        newItem();
+    }
 });
+
+orderForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    if (event.target.id === "new-order") {
+        newOrder();
+    }
+})
 
 window.onload = () => {
     getData("items");
@@ -94,12 +106,6 @@ const buildItems = prods => {
         edit.className = "editItem";
         del.innerHTML = "Delete";
         del.className = "delItem";
-
-        //if the buttons are clicked, call their respective functions and pass in the ID
-        
-        //KEEP THESE COMMENTED FOR YOUR OWN GOOD
-        // edit.click = editItem(id.textContent);
-        // del.onclick = deleteItem(id.textContent);
    
         table.append(row);
     }
@@ -126,12 +132,63 @@ const handleClicks = event => {
         case "saveItem" :
             saveItem(row);
             break;
+        case "editOrder" :
+            console.log(`editOrder ${id}`);
+            break;
+        case "delOrder" : 
+            console.log(`delOrder ${id}`);
+            break;
+        case "saveOrder" :
+            console.log(`saveOrder ${id}`);
+            break;    
     }
 }
 
 //working
 const buildOrders = ords => {
-    console.log("Orders... dude."); //replace this once you get buildItems functional, repurpose that for this one
+    //select the table
+    const table = document.querySelector("#orders-table");
+
+    //for each product in the list of products, populate a new element with its info and append to the table
+    for (const thing of ords) {
+        const row = document.createElement("tr");
+        row.className = "orderRow";
+
+        //ID, CustomerName, Date Placed, Order Subtotal, Order Total, Status, Edit Button, Delete Button...
+        const id = document.createElement("td");
+        const name = document.createElement("td");
+        const date = document.createElement("td");
+        const subtotal = document.createElement("td");
+        const total = document.createElement("td");
+        const status = document.createElement("td");
+        const edit = document.createElement("button");
+        const del = document.createElement("button");
+
+        //put the cells in the row
+        row.append(id, name, date, subtotal, total, status, edit, del);
+
+        id.textContent = thing.orderID;
+        id.className = "orderID";
+        name.textContent = thing.orderName;
+        name.className = "orderName";
+        date.textContent = thing.orderDate;
+        date.className = "orderDate";
+        subtotal.textContent = thing.orderSubTotal;
+        subtotal.className = "orderSubTotal";
+        total.textContent = thing.orderTotal;
+        total.className = "orderTotal";
+        status.textContent = thing.orderStatus;
+        status.className = "orderStatus";
+
+        edit.innerHTML = "Edit";
+        edit.className = "editOrder";
+        del.innerHTML = "Delete";
+        del.className = "delOrder";
+   
+        table.append(row);
+    }
+    //adding a generic click listener for the table
+    table.addEventListener("click", handleClicks);
 }
 
 //working
@@ -139,7 +196,7 @@ const newItem = async () => {
 
     //create a formData object and populate it with form data; I read about this from MDN
     //source: https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_forms_through_JavaScript
-    const formData = new FormData(form);
+    const formData = new FormData(itemForm);
 
     //converting from FormData's special content type to plain old JSON, since that's what my application expects
     const formDataData = {};
@@ -179,7 +236,7 @@ const newItem = async () => {
         */
 
         console.log(result);
-        wipeTable();
+        wipeTable("products");
         getData("items");
     }
     catch (err) {
@@ -189,9 +246,9 @@ const newItem = async () => {
 }
 
 //utility function
-const wipeTable = async () => {
+const wipeTable = async path => {
     //should probably make table a constant at this point...
-    const table = document.querySelector("#products-table");
+    const table = document.querySelector(`#${path}-table`);
 
     //selecting every row that isn't the header
     const rows = table.querySelectorAll("tr:not(:first-child)");
@@ -202,7 +259,7 @@ const wipeTable = async () => {
     //getting the table to NOT remove the header row was a headache... I need some coffee after this.
 }
 
-//so, each of these functions corresponds to a given button... feel like I should be outsourcing these to their own file
+//working?
 const editItem = async id => {
     //select the table, then the row associated with the provided ID
     const table = document.querySelector("#products-table");
@@ -245,6 +302,7 @@ const editItem = async id => {
     }
 }
 
+//working??
 const saveItem = async row => {
     //get the items out of the row; this feels like a time where destructuring would save the day, but I'm playing it safe (and kludgey).
     const id = row.children[0].innerHTML;
@@ -285,7 +343,7 @@ const saveItem = async row => {
     if (response.ok) {
         const results = await response.json();
         console.log(results);
-        wipeTable();
+        wipeTable("products");
         getData("items");
     }
     else {
@@ -348,8 +406,58 @@ const deleteItem = async (id) => {
     }
 }
 
+//working
 const newOrder = async () => {
+    //running out of time, I hate violating the DRY principle but it's basically the same functionality for both
+    //just not smart enough to make these generic...
+    const formData = new FormData(orderForm);
 
+    //converting from FormData's special content type to plain old JSON, since that's what my application expects
+    const formDataData = {};
+
+    //strange format for the iterator, suppose this helps me get used to inline functions though
+    formData.forEach((key, value) => {
+        formDataData[value] = key; //for some reason the keys and values got jumbled up, so this sets them the "right" way
+    });
+
+    //this feels distinctly kludgey
+    jsonData = JSON.stringify(formDataData);
+
+    console.log(jsonData);
+    //crazy thing here: I originally thought the form itself had to be created by clicking a button on the site
+    //instead of it just being part of the base HTML file
+    const uri = `http://localhost:3030/orders`;
+    const config = {
+        method: "post",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: jsonData
+    };
+
+    //we need to keep in mind any errors (like the database service being down)
+    try {
+        //send it off and print out the result of the fetch call
+        const response = await fetch(uri, config);
+        const result = await response.json();
+
+        /*
+        POST status codes:
+        201 (Created)- Item added to DB
+        400 (Bad Request)- Incorrectly-formatted data
+
+        So, if !response.ok, tell the user they did something wrong
+        */
+
+        console.log(result);
+        wipeTable("orders");
+        getData("orders");
+    }
+    catch (err) {
+        //something got borked.
+        console.log(err);
+    }
 }
 
 //waiting on completion of editItem()
