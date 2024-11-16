@@ -1,11 +1,65 @@
 /*still not amazing, but i'll worry more about this later */
 body {
-    background: linear-gradient(to right, white, rgb(121, 210, 236));
-    color: blue;
+    background: linear-gradient(to left, white, rgb(121, 210, 236));
+    color: black;
     background-color: aliceblue;
     font-family: "Arial";
 
     h1 {
         text-align: center;
     }
+}
+
+/* CSS Grid, one of my mortal enemies... alongside taxes and traffic jams */
+.grid-container-headers-1, .grid-container-headers-2, .grid-container-1, .grid-container-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 20px;
+    padding: 20px;
+}
+
+/* classes */
+
+.table {
+    grid-area: "table";
+}
+
+.form {
+    grid-area: "form";
+}
+
+/* other stuff */
+
+tr:nth-of-type(even) {
+    background-color: rgb(112, 112, 184);
+}
+
+table {
+    border: 5px lightcoral solid;
+    border-radius: 15px;
+    background-color: white;
+}
+
+input {
+    margin-bottom: 12px;
+}
+
+form {
+    border: 5px lightcoral solid;
+    border-radius: 15px;
+    background-color:rgb(121, 210, 236);
+}
+
+/* buttons */
+
+.editItem, .editOrder {
+    background-color: darkgray;
+}
+
+.saveItem, .saveOrder, input[type = "submit"] {
+    background-color:lightgreen;
+}
+
+.delItem, .delOrder {
+    background-color: red;
 }
