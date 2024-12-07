@@ -1,0 +1,4 @@
+.gitignore
+issues
+node_modules
+scripts
