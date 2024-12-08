@@ -7,11 +7,19 @@ dotenv.config({
     path: "./config.env"
 });
 
-const {DB_DATABASE, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD} = process.env;
+const {DB_DATABASE, DB_PORT, DB_USER, DB_PASSWORD} = process.env;
+
+let host;
+if (process.env.DB_HOST) { //if there's an environment variable provided for the host
+    host = process.env.DB_HOST; //assign it
+}
+else {
+    host = "localhost"; //if there isn't an environment variable provided for the host, then set it to localhost.
+}
 
 //connect to the database
 const connect = await mysql.createConnection({
-    host: DB_HOST,
+    host: HOST,
     port: DB_PORT,
     database: DB_DATABASE,
     user: DB_USER,
