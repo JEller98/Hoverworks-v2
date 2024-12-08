@@ -1,4 +1,4 @@
 .gitignore
 issues
 node_modules
-scripts
+scripts/mysql_data
