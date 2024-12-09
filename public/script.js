@@ -276,7 +276,6 @@ const newOrder = async () => {
     //this feels distinctly kludgey
     jsonData = JSON.stringify(formDataData);
 
-    console.log(jsonData);
     //crazy thing here: I originally thought the form itself had to be created by clicking a button on the site
     //instead of it just being part of the base HTML file
     const uri = `${window.location.origin}/orders`;
