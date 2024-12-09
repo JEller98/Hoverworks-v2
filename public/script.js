@@ -30,7 +30,7 @@ window.onload = () => {
 //utility function
 const getData = async path => {
     //i hope this doesn't get messy...
-    const uri = `http://localhost:3030/${path}`;
+    const uri = `${window.location.origin}/${path}`;
     const config = {
         method: "get",
         mode: "cors",
@@ -225,7 +225,7 @@ const newItem = async () => {
 
     //crazy thing here: I originally thought the form itself had to be created by clicking a button on the site
     //instead of it just being part of the base HTML file
-    const uri = `http://localhost:3030/items`;
+    const uri = `${window.location.origin}/items`;
     const config = {
         method: "post",
         mode: "cors",
@@ -279,7 +279,7 @@ const newOrder = async () => {
     console.log(jsonData);
     //crazy thing here: I originally thought the form itself had to be created by clicking a button on the site
     //instead of it just being part of the base HTML file
-    const uri = `http://localhost:3030/orders`;
+    const uri = `${window.location.origin}/orders`;
     const config = {
         method: "post",
         mode: "cors",
@@ -366,7 +366,7 @@ const saveItem = async row => {
     const stock = row.querySelector(".stock input").value;
 
     //now make the request...
-    const uri = `http://localhost:3030/items/${id}`;
+    const uri = `${window.location.origin}/items/${id}`;
     const config = {
         method: "put",
         mode: "cors",
@@ -458,7 +458,7 @@ const saveOrder = async row => {
     const status = row.querySelector(".orderStatus input").value;
 
     //now make the request...
-    const uri = `http://localhost:3030/orders/${id}`;
+    const uri = `${window.location.origin}/orders/${id}`;
     const config = {
         method: "put",
         mode: "cors",
@@ -514,7 +514,7 @@ const deleteItem = async (id) => {
                     row.remove();
 
                     // make a DELETE HTTP request to the database, right?
-                    const uri = `http://localhost:3030/items/${id}`;
+                    const uri = `${window.location.origin}/items/${id}`;
                     const config = {
                         method: "delete",
                         mode: "cors",
@@ -569,7 +569,7 @@ const deleteOrder = async id => {
                     row.remove();
 
                     // make a DELETE HTTP request to the database, right?
-                    const uri = `http://localhost:3030/orders/${id}`;
+                    const uri = `${window.location.origin}/orders/${id}`;
                     const config = {
                         method: "delete",
                         mode: "cors",
