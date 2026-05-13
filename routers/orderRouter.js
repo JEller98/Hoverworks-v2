@@ -1,17 +1,21 @@
 import express from "express";
-import {getOrders, getOrderByID, addOrder, updateOrder, deleteOrder} from "../controllers/orderController.js";
+import {getOrders, getOrderByID, addOrder, getRecentPurchases} from "../controllers/controller.js";
 
 const router = express.Router();
 
 //Create, Read, Read (again), Update,  Delete, in that order.
+
 router.post("/", addOrder);
+
+router.get("/recent", getRecentPurchases);
 
 router.get("/", getOrders);
 
-router.get("/:id", getOrderByID)
+router.get("/:id", getOrderByID);
 
-router.put("/:id", updateOrder);
+// commented out for v2
+// router.put("/:id", updateOrder);
 
-router.delete("/:id", deleteOrder);
+// router.delete("/:id", deleteOrder);
 
 export default router;

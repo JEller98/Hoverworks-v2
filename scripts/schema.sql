@@ -1,23 +1,28 @@
-CREATE TABLE products(
-    prodID INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    prodType VARCHAR (50) NOT NULL DEFAULT "Undefined", -- board, bike, or skate
-    prodPrice FLOAT NOT NULL DEFAULT 0.01,
-    prodName VARCHAR (50) NOT NULL DEFAULT "Undefined Product",
-    prodDesc VARCHAR (1000),
+--updated schema for PostGres
+CREATE TABLE IF NOT EXISTS products (
+    prodID SERIAL NOT NULL PRIMARY KEY,
+    prodType VARCHAR (50) NOT NULL DEFAULT 'Undefined', -- board, bike, or skate
+    prodPrice DECIMAL (10, 2) NOT NULL DEFAULT 0.01,
+    prodName VARCHAR (50) NOT NULL DEFAULT 'Undefined Product',
+    prodDesc TEXT, --TEXT means unlimited characters, better for descriptions
+    prodImg TEXT, --store filepath
     stock INT, -- for inventory purposes
     deckLength INT, -- NULL for non-boards
-    skateSize INT -- NULL for non-skates
+    skateSize TEXT -- NULL for non-skates
 );
 
-CREATE TABLE orders(
-    orderID INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    orderName VARCHAR (100) NOT NULL DEFAULT "John Doe",
-    orderSubTotal FLOAT NOT NULL DEFAULT 0.01,
-    orderTax FLOAT,
-    orderPromo FLOAT, -- discount codes, SUBTRACT this amount from orderTotal
-    orderTotal FLOAT NOT NULL DEFAULT 0.01,
-    orderDate DATETIME DEFAULT NOW(),
-    orderStatus VARCHAR (50) NOT NULL DEFAULT "Pending" -- Pending, Processing, Shipping, Delivered, Canceled...
-    -- CONSTRAINT chk_price CHECK (orderSubTotal > 0 AND orderTotal > 0) -- No negatives in the subtotal/total price
-    -- bring over the user's address as a foreign key? Maybe?
+CREATE TABLE IF NOT EXISTS orders (
+    orderID SERIAL NOT NULL PRIMARY KEY,
+    orderName VARCHAR (100) NOT NULL DEFAULT 'John D',
+    orderTotal DECIMAL (10, 2) NOT NULL DEFAULT 0.01,
+    orderDate DATE DEFAULT CURRENT_DATE, --DATE = date, CURRENT_DATE = NOW()
+    orderStatus VARCHAR (50) NOT NULL DEFAULT 'Pending' -- Pending, Processing, Shipping, Delivered, Canceled...
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+    itemID SERIAL PRIMARY KEY,
+    orderID INT NOT NULL REFERENCES orders(orderID),
+    prodID INT NOT NULL REFERENCES products(prodID),
+    quantity INT NOT NULL,
+    priceAtPurchase DECIMAL (10, 2) NOT NULL
 );

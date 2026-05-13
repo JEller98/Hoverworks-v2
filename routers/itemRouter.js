@@ -1,19 +1,23 @@
 import express from "express";
 
 //if destructuring functions imported from a file, don't use "export default" in that file; just "export".
-import {getItems, getItemByID, addItem, updateItem, deleteItem} from "../controllers/itemController.js";
+import {getItems} from "../controllers/controller.js";
 
 const router = express.Router();
 
 //products routes
-router.post("/", addItem); //C
+
+// disabled for v2
+// router.post("/", addItem); //C
 
 router.get("/", getItems); //R
 
-router.get("/:id", getItemByID); //also R
+// router.get("/:id", getItemByID);
 
-router.put("/:id", updateItem); //U
+//update/delete disabled for Hoverworks v2
 
-router.delete("/:id", deleteItem); //D
+// router.put("/:id", updateItem); //U
+
+// router.delete("/:id", deleteItem); //D
 
 export default router;

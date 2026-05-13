@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600&family=DM+Mono&display=swap');
+
+:root {
+    /* Colors */
+    --color-bg: #f2f2f2;
+    --color-bg-secondary: #ffffff;
+    --color-text: #111111;
+    --color-text-muted: #555555;
+    --color-accent: #0047ff;
+    --color-accent-hover: #0035cc;
+    --color-border: #dddddd;
+
+    /* Fonts */
+    --font-display: "Bebas Neue", sans-serif;
+    --font-body: "Barlow Condensed", sans-serif;
+    --font-mono: "DM Mono", monospace;
+
+    /* Spacing Gaps */
+    --spacing-small: 8px;
+    --spacing-medium: 16px;
+    --spacing-large: 32px;
+    --spacing-extra-large: 64px;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: inherit;
+}
