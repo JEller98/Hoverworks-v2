@@ -86,7 +86,7 @@ export async function getRecentPurchases() {
         //DISTINCT ON forces orderid first, but we want to order by date... subquery time.
         `SELECT * FROM (
             SELECT DISTINCT ON (o.orderid)
-            o.orderid AS "orderID", o.orderdate AS "orderDate", oi.prodid AS "prodID", p.prodname AS "prodName", p.prodtype AS "prodType"
+            o.orderid AS "orderID", o.orderdate AS "orderDate", oi.prodid AS "prodID", p.prodname AS "prodName", p.prodtype AS "prodType", p.prodimg AS "prodImg"
             FROM orders o
             JOIN order_items oi ON o.orderid = oi.orderid
             JOIN products p ON oi.prodid = p.prodid
